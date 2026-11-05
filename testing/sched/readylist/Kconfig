@@ -1,0 +1,30 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config TESTING_READYLIST
+	tristate "Ready-to-run list insertion test"
+	default n
+	depends on BUILD_FLAT
+	---help---
+		Measures how long sem_post() from a timer interrupt keeps
+		interrupts disabled as the number of ready-to-run tasks grows.
+		With SCHED_READYLIST_STATS it also checks how many list entries
+		the sorted insertion steps over.
+
+if TESTING_READYLIST
+
+config TESTING_READYLIST_PRIORITY
+	int "Priority of readylist process"
+	default 100
+
+config TESTING_READYLIST_STACKSIZE
+	int "Stack size of readylist process"
+	default DEFAULT_TASK_STACKSIZE
+
+config TESTING_READYLIST_FILLER_STACKSIZE
+	int "Stack size of each filler thread"
+	default PTHREAD_STACK_DEFAULT
+
+endif
